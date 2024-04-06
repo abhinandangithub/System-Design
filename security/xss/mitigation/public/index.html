@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- xss script -->
+    <script src="http://unsecure.com/abc.js"></script>
+    <script nonce="randomkey">
+        console.log('My trusted code') // inline script 'unsafe-inline' 
+    </script>
+
+    <script>
+        console.log('My non-trusted code') // inline script 'unsafe-inline' 
+    </script>
+</head>
+<body>
+    <h2>Page for cors Demo.</h2>
+    <img src="https://media.licdn.com/dms/image/D4D35AQGqZKr-S8_2dw/profile-framedphoto-shrink_200_200/0/1710922423747?e=1713002400&v=beta&t=TZDxRdDcWi_3tGdL4aqia4jHCFeM7RsOzxHAhvtKeUw"/>
+    <!-- Refused to load the image 'https://media.licdn.com/dms/image/D4D35AQGqZKr-S8_2dw/profile-framedphoto-shrink_200_200/0/1710922423747?e=1713002400&v=beta&t=TZDxRdDcWi_3tGdL4aqia4jHCFeM7RsOzxHAhvtKeUw' because it violates the following Content Security Policy directive: "default-src 'self'". Note that 'img-src' was not explicitly set, so 'default-src' is used as a fallback. -->
+</body>
+</html>

